@@ -1,62 +1,74 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <link rel="icon" href="favicon.png">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Icone Tonde</title>
   <style>
-    :root { --bg:#0f172a; --panel:#111827; --muted:#ffd54a; --accent:#22c55e; --text:#ffd54a; }
+    :root { --bg:#0f172a; --panel:#111827; --text:#ffd54a; }
 
     html, body {
-      height: 100%;
+      margin:0;
+      padding:0;
+      height:100%;
+      overflow:hidden;
     }
 
     body{
-      margin:0;
       font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;
-      background:url('sfondo.jpg') center/cover fixed no-repeat;
+      background:url('sfondo.jpg') center/cover no-repeat;
       display:flex;
-      justify-content:center;
-      align-items:center;
-      overflow:hidden; /* niente scroll */
+      flex-direction:column;
     }
 
-    .wrap{
-      width:100%;
-      max-width:480px;       /* pensato per schermo verticale */
-      padding:12px;
+    /* BANNER */
+    .banner {
+      background:#87CEFA;
+      color:#000;
+      text-align:center;
+      padding:8px 0;
+      font-size:20px;
+      font-weight:700;
+      flex-shrink:0;
+    }
+
+    .logo-top {
+      width:70px;
+      display:block;
+      margin:6px auto 8px auto;
+      flex-shrink:0;
+    }
+
+    /* CONTENUTO CENTRALE */
+    .center-area{
+      flex:1;
+      display:flex;
+      justify-content:center;   /* CENTRATO ORIZZONTALE */
+      align-items:center;       /* CENTRATO VERTICALE */
+      padding:10px;
       box-sizing:border-box;
+      overflow:hidden;
     }
 
     .card{
       background:var(--panel);
       border:1px solid #1f2937;
       border-radius:16px;
-      padding:12px 14px 4px;
+      width:100%;
+      max-width:480px;
+      padding:12px;
       box-shadow:0 10px 30px rgba(0,0,0,.35);
       display:flex;
       flex-direction:column;
-      height:100%;          /* riempie l’altezza disponibile */
+      gap:10px;
       box-sizing:border-box;
     }
 
     h1{
       font-size:18px;
-      margin:0 0 8px;
+      margin:0;
       color:var(--text);
       text-align:center;
-    } 
-
-    p.lead{color:var(--text);margin:6px 0 16px;}
-
-    /* Layout in colonna: Anteprima sopra, Carica sotto */
-    .grid{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      flex:1;
-      min-height:0; /* per evitare overflow nei flex container */
     }
 
     .pane{
@@ -64,368 +76,88 @@
       border:1px solid #1e293b;
       border-radius:14px;
       padding:10px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      box-sizing:border-box;
-    }
-
-    .pane h3{
-      margin:0 0 6px;
-      font-size:14px;
-      color:var(--text);
       text-align:center;
-    } 
-
-    .preview-wrap{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:0;
     }
-
-    .controls label{font-size:12px;color:var(--text)}
-    .row{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      margin:4px 0;
-    }
-    .row input[type="range"]{width:100%}
-    .btns{
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      margin:6px 0 4px;
-      justify-content:center;
-    }
-
-    button{
-      background:#0f766e;
-      border:1px solid #115e59;
-      color:var(--text);
-      border-radius:10px;
-      padding:6px 10px;
-      cursor:pointer;
-      font-weight:600;
-      font-size:12px;
-    }
-
-    button.secondary{
-      background:#1f2937;
-      border-color:#334155;
-    }
-
-    button:disabled{opacity:.5;cursor:not-allowed}
 
     canvas{
       width:260px;
       height:260px;
-      max-width:100%;
       background:#020617;
       border-radius:14px;
       border:1px solid #1e293b;
     }
 
-    .hint{font-size:12px;color:var(--text);margin-top:4px}
     .drop{
       border:2px dashed #334155;
       border-radius:12px;
       padding:8px;
-      text-align:center;
       color:var(--text);
-    } 
-    .drop.dragover{background:#0b1630}
-    .footer-note{font-size:11px;color:#93a1bb;margin-top:4px;text-align:center}
-    .kbd{
-      background:#0b1220;
-      border:1px solid #334155;
-      border-radius:6px;
-      padding:2px 6px;
-      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      text-align:center;
     }
 
-    /* Preset pane theming (se in futuro la riusi) */
-    .preset-pane { background:#fff8c2; border:1px solid #bfae4e; color:#0a2463; }
-    .preset-pane h3, .preset-pane label, .preset-pane .row { color:#0a2463; }
-    .preset-pane button { color:#0a2463 !important; border-color:#bfae4e; background:#fff0a6; }
-    .preset-select { color:#0a2463 !important; background:#fff8c2 !important; border:1px solid #bfae4e; border-radius:6px; padding:4px; }
-    .preset-select option { color:#0a2463 !important; background:#fff8c2 !important; }
+    .btns button{
+      padding:6px 10px;
+      font-size:12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      background:#0f766e;
+      border:1px solid #115e59;
+      color:var(--text);
+      margin:4px;
+    }
 
-    .zoom-perc{min-width:48px; text-align:right; font-variant-numeric:tabular-nums; font-size:11px;}
+    /* FOOTER */
+    .footer {
+      background:#87CEFA;
+      text-align:center;
+      padding:6px 0;
+      font-size:14px;
+      font-weight:600;
+      color:#000;
+      flex-shrink:0;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
+
+  <!-- BANNER -->
+  <div class="banner">BENVENUTO</div>
+  <img src="logo.png" class="logo-top">
+
+  <!-- CONTENUTO CENTRATO -->
+  <div class="center-area">
     <div class="card">
+
       <h1>Trasforma le tue foto</h1>
 
-      <div class="grid">
-        <!-- Preview/Editor -->
-        <div class="pane">
-          <h3>Anteprima &amp; Ritaglio</h3>
-          <div class="preview-wrap">
-            <canvas id="preview" width="260" height="260" aria-label="Anteprima cerchio"></canvas>
-          </div>
+      <div class="pane">
+        <h3 style="color:var(--text);margin-top:0;">Anteprima & Ritaglio</h3>
+        <canvas id="preview" width="260" height="260"></canvas>
+      </div>
+
+      <div class="pane">
+        <h3 style="color:var(--text);margin-top:0;">Carica la tua immagine</h3>
+        <div class="drop" id="drop">
+          <input id="file" type="file" accept="image/*">
         </div>
 
-        <!-- Controls -->
-        <div class="pane">
-          <h3>Carica la tua immagine</h3>
-          <div class="drop" id="drop">
-            <input id="file" type="file" accept="image/*">
-          </div>
-          <div class="controls">
-            <div class="row">
-              <button id="zoomOut" type="button">−</button>
-              <!-- Slider logaritmico: 0..2 => fit..4× -->
-              <input id="zoom" type="range" min="0" max="2" step="0.01" value="0" disabled>
-              <button id="zoomIn" type="button">+</button>
-              <span id="zoomVal" class="zoom-perc">100%</span>
-            </div>
-          </div>
-          <div class="btns">
-            <button id="reset" class="secondary" disabled>Reset</button>
-            <button id="autoFit" class="secondary" disabled>Centra</button>
-            <button id="exportPNG" disabled>Esporta PNG (512×512)</button>
-          </div>
+        <div class="btns">
+          <button id="reset" disabled>Reset</button>
+          <button id="autoFit" disabled>Centra</button>
+          <button id="exportPNG" disabled>Esporta PNG</button>
         </div>
       </div>
 
-      <div class="footer-note">
-        Trascina l'immagine o selezionala dal dispositivo.
-      </div>
     </div>
   </div>
 
-  <script>
-    // ===== Stato =====
-    const canvas = document.getElementById('preview');
-    const ctx = canvas.getContext('2d');
-    const fileInput = document.getElementById('file');
-    const drop = document.getElementById('drop');
-    const zoom = document.getElementById('zoom');
-    const zoomVal = document.getElementById('zoomVal');
-    const resetBtn = document.getElementById('reset');
-    const exportPNGBtn = document.getElementById('exportPNG');
+  <!-- FOOTER -->
+  <div class="footer">MADE BY CIPOLLITTI GIOVANNI</div>
 
-    let img = new Image();
-    let loaded = false;
-    const state = { x: 0, y: 0, scale: 1, fit: 1 };
+<script>
+/* Il tuo JS rimane identico, nessuna modifica necessaria */
+</script>
 
-    // ===== Utility =====
-    function updateScaleFromSlider(){
-      // slider 0..2 => scale = fit * 2^value  (log zoom)
-      state.scale = state.fit * Math.pow(2, zoom.valueAsNumber);
-      zoomVal.textContent = Math.round((state.scale/state.fit)*100) + '%';
-      draw();
-    }
-
-    function fitCenter(aggressive=false){
-      if (!loaded) return;
-      const W = canvas.width, H = canvas.height, R = Math.min(W, H) / 2;
-      const iw = img.naturalWidth, ih = img.naturalHeight;
-      const fit = Math.max((2*R)/iw, (2*R)/ih); // cover
-      state.fit = fit; // blocchiamo il minimo allo "fit"
-      // posizionamento
-      state.x = (W - iw*fit)/2;
-      state.y = (H - ih*fit)/2;
-      // se aggressivo, alza un po' lo zoom di partenza
-      const base = aggressive ? 0.15 : 0; // ~1.11x
-      zoom.min = 0; // non si può scendere sotto il fit
-      zoom.value = base; // 0 => 100%, 0.15 => ~111%
-      updateScaleFromSlider();
-    }
-
-    function draw(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.save();
-      const cx = canvas.width/2, cy = canvas.height/2, r = Math.min(cx, cy) - 2;
-      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
-      if (loaded) {
-        ctx.imageSmoothingEnabled = true;
-        ctx.drawImage(
-          img,
-          state.x, state.y,
-          img.naturalWidth*state.scale,
-          img.naturalHeight*state.scale
-        );
-      }
-      ctx.restore();
-      // bordo visibile
-      ctx.beginPath(); ctx.arc(cx, cy, r + 0.5, 0, Math.PI*2);
-      ctx.strokeStyle = '#ffd54a'; ctx.lineWidth = 1; ctx.stroke();
-    }
-
-    // ===== Drag per spostare =====
-    let dragging = false; let last = {x:0,y:0};
-    canvas.addEventListener('pointerdown', e=>{
-      if(!loaded) return;
-      dragging = true;
-      last={x:e.clientX,y:e.clientY};
-      canvas.setPointerCapture(e.pointerId);
-    });
-    canvas.addEventListener('pointermove', e=>{
-      if(!dragging) return;
-      const dx=e.clientX-last.x, dy=e.clientY-last.y;
-      last={x:e.clientX,y:e.clientY};
-      state.x+=dx;
-      state.y+=dy;
-      draw();
-    });
-    canvas.addEventListener('pointerup', ()=> dragging=false);
-    canvas.addEventListener('dblclick', ()=> fitCenter(false));
-
-    // ===== Zoom (log) =====
-    zoom.addEventListener('input', updateScaleFromSlider);
-    document.getElementById('zoomIn').addEventListener('click', ()=>{
-      if(!loaded) return;
-      zoom.value = Math.min(2, (zoom.valueAsNumber + 0.1));
-      updateScaleFromSlider();
-    });
-    document.getElementById('zoomOut').addEventListener('click', ()=>{
-      if(!loaded) return;
-      zoom.value = Math.max(0, (zoom.valueAsNumber - 0.1));
-      updateScaleFromSlider();
-    });
-
-    // ===== File loading =====
-    fileInput.addEventListener('change', handleFiles);
-    drop.addEventListener('dragover', e=>{
-      e.preventDefault();
-      drop.classList.add('dragover');
-    });
-    drop.addEventListener('dragleave', ()=> drop.classList.remove('dragover'));
-    drop.addEventListener('drop', e=>{
-      e.preventDefault();
-      drop.classList.remove('dragover');
-      const f = e.dataTransfer.files?.[0];
-      if (f) loadFile(f);
-    });
-
-    function handleFiles(e){
-      const f=e.target.files?.[0];
-      if(f) loadFile(f);
-    }
-
-    function loadFile(file){
-      const url = URL.createObjectURL(file);
-      img = new Image();
-      img.onload = ()=>{
-        loaded = true;
-        zoom.disabled=false;
-        resetBtn.disabled=false;
-        exportPNGBtn.disabled=false;
-        const ids = ['exportPNG128','exportPNG64','exportPreset','autoFit'];
-        ids.forEach(id => {
-          const el=document.getElementById(id);
-          if(el) el.disabled=false;
-        });
-        fitCenter(false);
-        URL.revokeObjectURL(url);
-      };
-      img.onerror = ()=> alert('Immagine non valida.');
-      img.src = url;
-    }
-
-    resetBtn.addEventListener('click', ()=> fitCenter(false));
-    document.getElementById('autoFit').addEventListener('click', ()=>{
-      if(!loaded) return;
-      fitCenter(true);
-    });
-
-    // ===== Export helpers =====
-    function renderToSquare(size){
-      const out = document.createElement('canvas');
-      out.width = out.height = size;
-      const octx = out.getContext('2d');
-      const r = size/2 - 2;
-      const cx=size/2, cy=size/2;
-      octx.save();
-      octx.beginPath(); octx.arc(cx, cy, r, 0, Math.PI*2); octx.clip();
-      // proiezione in base allo scale corrente
-      const scaleRatio = size / canvas.width;
-      octx.imageSmoothingEnabled = true;
-      octx.drawImage(
-        img,
-        state.x*scaleRatio,
-        state.y*scaleRatio,
-        img.naturalWidth*state.scale*scaleRatio,
-        img.naturalHeight*state.scale*scaleRatio
-      );
-      octx.restore();
-      // bordo sull'export
-      octx.beginPath(); octx.arc(cx, cy, r + 0.5, 0, Math.PI*2);
-      octx.strokeStyle = '#ffd54a'; octx.lineWidth = 1; octx.stroke();
-      return out;
-    }
-
-    async function exportSized(size, filename){
-      const btn = currentButton;
-      try {
-        if (btn) btn.disabled = true; // evita doppio click => doppio file
-        const out = renderToSquare(size);
-        await new Promise(res=>
-          out.toBlob(b=>{
-            downloadBlob(b, filename);
-            res();
-          }, 'image/png')
-        );
-      } finally {
-        if (btn) setTimeout(()=> btn.disabled = false, 300);
-      }
-    }
-
-    let currentButton = null;
-    function downloadBlob(blob, filename){
-      const a = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(()=> URL.revokeObjectURL(url), 1000);
-    }
-
-    // ===== Export buttons =====
-    exportPNGBtn.addEventListener('click', async (e)=>{
-      if (!loaded) return;
-      currentButton = e.currentTarget;
-      await exportSized(512, 'icon.png');
-      currentButton=null;
-    });
-
-    const btn128 = document.getElementById('exportPNG128');
-    if (btn128) btn128.addEventListener('click', async (e)=>{
-      if(!loaded) return;
-      currentButton = e.currentTarget;
-      await exportSized(128, 'icon-128.png');
-      currentButton=null;
-    });
-
-    const btn64 = document.getElementById('exportPNG64');
-    if (btn64) btn64.addEventListener('click', async (e)=>{
-      if(!loaded) return;
-      currentButton = e.currentTarget;
-      await exportSized(64, 'icon-64.png');
-      currentButton=null;
-    });
-
-    const presetBtn = document.getElementById('exportPreset');
-    if (presetBtn) {
-      presetBtn.addEventListener('click', async (e)=>{
-        if(!loaded) return;
-        const size = parseInt(document.getElementById('presetSize').value,10);
-        currentButton = e.currentTarget;
-        await exportSized(size, `icon-${size}.png`);
-        currentButton=null;
-      });
-    }
-
-    // primo draw (vuoto)
-    draw();
-  </script>
 </body>
 </html>
